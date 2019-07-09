@@ -367,7 +367,6 @@ hadoop@yyt ~$ ln -s <external hard disk> hadoop-3.2.0
 #### 1.Configuring hadoop environment variables on every node.
 
 ```sh
-
 # open shell profile,zsh is .zshrc, bash is .bashrc.
 hadoop@master ~$ sudo vim .zshrc
 # Add following codes.
@@ -378,8 +377,56 @@ hadoop@master ~$ source .zshrc
 ```
 
 #### 2.Format the hdfs file system.
-Run following command on masternode.
+Run following command **on masternode.**
 ```sh
 hadoop@master ~$ hdfs namenode -format
 ```
 You will see messages like:
+![](https://i.loli.net/2019/07/09/5d24a0c85925775611.png)
+
+It means format successfully.
+Where `host = lcc-me/127.0.1.1` should be `master/127.0.0.1`.Since only masternode should be format.
+
+#### 3.Start hadoop nodes
+Run following command:
+```sh
+hadoop@master ~$ cd /home/hadoop/hadoop-3.2.0/sbin/
+hadoop@master ~$ ./start-all.sh
+```
+#### 4.Check master and worker nodes
+Run following command:
+```sh
+hadoop@master ~$ jps
+# Switch to every workers nodes and run:
+hadoop@lcc ~$ jps
+hadoop@yyt ~$ jps
+...
+```
+You will see messages like:
+![](https://i.loli.net/2019/07/09/5d24a26a307c845777.png)
+![](https://i.loli.net/2019/07/09/5d24a27775ab692354.png)
+![](https://i.loli.net/2019/07/09/5d24a2d6554fd74793.png)
+If no warnings and errors appear, It means all nodes are started.
+
+#### 5.Check WebUI
+##### Access the hdfs file system address set in core-site.xml,take my settings as an example: http://localhost:9870
+
+Your will see web pages like:
+![](https://i.loli.net/2019/07/09/5d24a3db762aa24335.png)
+![](https://i.loli.net/2019/07/09/5d24a3e003c5594307.png)
+
+##### Access http://localhost:8088 to check the status that task running on nodes.
+(This address do not need to be set.)
+![](https://i.loli.net/2019/07/09/5d24a4874e1eb85230.png)
+
+#### 6.Test example task
+Run following command:
+```sh
+hadoop@master ~$ cd /home/hadoop/hadoop-3.2.0/share/hadoop/mapreduce
+hadoop@master ~$ hadoop jar hadoop-mapreduce-examples-3.2.0.jar pi 10 10
+```
+
+If you see following messages,it means cluster configuring successfully.
+![](https://i.loli.net/2019/07/09/5d24a5359892d66747.png)
+![](https://i.loli.net/2019/07/09/5d24a53f37fe651941.png)
+![](https://i.loli.net/2019/07/09/5d24a543c8e1076347.png)
