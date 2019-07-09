@@ -14,7 +14,7 @@ Mapreduce program will find the html pages that have the most keywords.
 ### Prerequisites
 You need to configure a hadoop cluster.You can find my configure guide in Hadoop_conf_guide.md [hadoop3.2.0]
 
-### Usage example 使用示例
+### Usage example
 
 Start all node in cluster.
 
