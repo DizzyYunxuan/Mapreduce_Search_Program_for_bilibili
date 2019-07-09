@@ -383,4 +383,3 @@ Run following command on masternode.
 hadoop@master ~$ hdfs namenode -format
 ```
 You will see messages like:
-![](https://github.com/DizzyYunxuan/Mapreduce_Search_Program_for_bilibili/blob/master/imgs/format.png)
