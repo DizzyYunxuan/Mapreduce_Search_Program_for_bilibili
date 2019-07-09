@@ -1,36 +1,36 @@
 # Build Hadoop/MapReduce Cluster
 
 ## 1.Configuring nodes
-###1.Add hadoop user to every node.
-####1.Add hadoop user
+### 1.Add hadoop user to every node.
+#### 1.Add hadoop user
 ```sh
 $ sudo adduser hadoop
 Enter new UNIX password:
 Retype new UNIX password:
 passwd: password updated successfully
 ```
-####2.Change to hadoop user
+#### 2.Change to hadoop user
 ```sh
 $ su hadoop
 Password:
 hadoop@master ~ $
 ```
-####3.Grant root privileges
+#### 3.Grant root privileges
 ```sh
 hadoop@master ~ $ su #change to root
 [master] chmod 777 /etc/sudoers
 # add "hadoop hadoop ALL=(ALL:ALL) ALL" at the end of file
 [master] chmod 440 /etc/sudoers
 ```
-###2.Configuring hostname of every node
-####1.Change hostname
+### 2.Configuring hostname of every node
+#### 1.Change hostname
 ```sh
 hadoop@master $ su
 Password：
 [master] hostname <name>
 ```
-###3. Configuring hosts
-####1.Change to hadoop user and edit hosts file
+### 3. Configuring hosts
+#### 1.Change to hadoop user and edit hosts file
 ```sh
 hadoop@master ~ $ sudo vim /etc/hosts
 # add IP address and name at the end of file
@@ -44,8 +44,8 @@ For example:
 ***.***.***.***     yyt         #WorkerNode
 ```
 
-###4.Install JDK on every nodes
-####1.Check JDK version and install
+### 4.Install JDK on every nodes
+#### 1.Check JDK version and install
 ```sh
 hadoop@master ~$ java -version
 ```
@@ -62,7 +62,7 @@ If jdk is not installed, Download java-8-*.gz and run following command:
 ```sh
 hadoop@master ~$     tar -xvf java-8-*.gz
 ```
-####2.Configuring java environment variables
+#### 2.Configuring java environment variables
 Find java enviroment variable path:
 ```sh
 hadoop@master ~$ echo $JAVA_HOME
@@ -78,9 +78,9 @@ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 #<your java home path>
 export PATH=$JAVA_HOME/bin:$PATH
 ```
 
-###5.Configure password-free login to Workers node
+### 5.Configure password-free login to Workers node
 
-####1.Generate and handoff keys
+#### 1.Generate and handoff keys
 ```sh
 hadoop@master ~ $ ssh-keygen -t rsa # Generate keys
 
@@ -104,19 +104,19 @@ hadoop@lcc ~ $ sudo chmod 755 .ssh
 hadoop@lcc / $ sudo chmod 700 /home/hadoop
 ```
 
-####2.Check whether password-free login works
+#### 2.Check whether password-free login works
 ```sh
 hadoop@master ~$ ssh lcc
 # If you are not asked to enter password, it should be works well.
 ```
 
-###6.Configuring Hadoop cluster
+### 6.Configuring Hadoop cluster
 
-####1.Download hadoop source files from https://hadoop.apache.org/releases.html
+#### 1.Download hadoop source files from https://hadoop.apache.org/releases.html
 **Since the latest version is extremely lacking in documentation, it is not recommended to download the latest version. I spent a lot of time configuring the latest version.**
 **Following process is based on latest version hadoop-3.2.0**
 
-####2.Extract the compression package
+#### 2.Extract the compression package
 Since the hadoop is large, it is not recommended to put it in the home directory.You can extract the package to external hard disk and build a soft-connection to the home directory.
 ```sh
 hadoop@master ~$ cd <path to external hard disk>
@@ -131,7 +131,7 @@ hadoop@master ~$ ls
 bin  lib	  LICENSE.txt  NOTICE.txt  sbin 
 etc  include	 libexec  logs	       README.txt  share  
 ```
-####3.Configuring environments variable hadoop-env.sh
+#### 3.Configuring environments variable hadoop-env.sh
 Run following command:
 ```sh
 hadoop@master ~$ sudo vim /home/hadoop/hadoop-3.2.0/etc/hadoop/hadoop-env.sh
@@ -141,7 +141,7 @@ Find the following codes:
 export JAVA_HOME=${JAVA_HOME}
 # Replace ${JAVA_HOME} by your java home, save and exit
 ```
-####4.Configuring yarn-env.sh
+#### 4.Configuring yarn-env.sh
 Run following command:
 ```sh
 hadoop@master ~$ sudo vim /home/hadoop/hadoop-3.2.0/etc/hadoop/yarn-env.sh
@@ -151,7 +151,7 @@ Find the following codes:
 export JAVA_HOME=${JAVA_HOME}
 # Replace ${JAVA_HOME} by your java home, save and exit
 ```
-####5.Configuring core-site.xml
+#### 5.Configuring core-site.xml
 This file is used to configure the file system that manages hadoop -- HDFS.
 Run following command:
 ```sh
@@ -176,7 +176,7 @@ This is my configuration:
 * The value of `fs.defaultFS` is the webUI address of HDFS file system.`master` is the hostname of masternode.`9800` is the port number, which can be set arbitrarily.
 * `hadoop.tmp.dir` is the directory which is used to store temporary file of hadoop.Before it works, it should be created first.
 
-####6.Configuring hdfs-site.xml
+#### 6.Configuring hdfs-site.xml
 This file is used to configure the properties of the HDFS file sytem.
 Run following command:
 ```sh
@@ -201,7 +201,7 @@ Here is my configuration:
 * The value of `dfs.replication` is `1`, which is used to control the number of copy in every datanode.
 * The value of `dfs.storage.policy.satisfier.retry.max.attempts` is `100`,Which is used to control the number of reconnection after a datanode disconneted.
 
-####7.Configuring yarn-site.xml
+#### 7.Configuring yarn-site.xml
 This file is used to configure the mapping ports for various log files.
 Run following command:
 ```sh
@@ -253,10 +253,6 @@ Here is my configuration:
     </property>
 </configuration>
 ```
-
-yarn.application.classpath 是 yarn 应 用 的 类 地 址 。 每 台 机 器 各 不 相 同 , 只 需 要 填
-master 节点上的该地址。
-
 * `yarn.resourcemanager.address` is the webUI address of hadoop computing resource management system.`master:18040` is the hostname and the port number of master node.The port number can be set arbitrarily.
 * `yarn.resourcemanager.scheduler.address` is the webUI address of hadoop computing resource scheduling management system.
 * `yarn.resourcemanager.resource-tracker.address` is the webUI address of hadoop task tracker.
@@ -268,7 +264,7 @@ percentage` is a threshold which is used to determinate whether the available sp
 * `yarn.nodemanager.resource.memory-mb` is the size of the memory space available to each node.
 * `yarn.application.classpath` is class address of yarn application.Each machine is different, just fill in the address on the master node.
 
-####8.Configuring mapred-site.xml
+#### 8.Configuring mapred-site.xml
 
 This file is used to configure hadoop computing yarn system framwork.
 We need to copy mapred-site-template.xml as mapred-site.xml:
@@ -335,7 +331,7 @@ Here is my configuration:
 * `mapreduce.map.memory.mb` is the memory that schedulr allocated to datanode during map process.
 * `mapreduce.reducememory.mb `is the memory that schedulr allocated to datanode during reduce process.
 
-####9.Configuring workers file.
+#### 9.Configuring workers file.
 Run following command:
 ```sh
 hadoop@master ~$ cd /home/hadoop/hadoop-3.2.0/etc/hadoop/
@@ -347,7 +343,7 @@ lcc
 yyt
 #save and exit
 ```
-####10.Distribute the configured hadoop to each worker node.
+#### 10.Distribute the configured hadoop to each worker node.
 Run following command:
 ```sh
 hadoop@master ~$ cd /home/hadoop/
@@ -367,8 +363,8 @@ hadoop@yyt ~$ ln -s <external hard disk> hadoop-3.2.0
 #The same scp operation to other datanodes
 ...
 ```
-###7.Start hadoop cluster
-####1.Configuring hadoop environment variables on every node.
+### 7.Start hadoop cluster
+#### 1.Configuring hadoop environment variables on every node.
 
 ```sh
 
@@ -381,7 +377,7 @@ export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
 hadoop@master ~$ source .zshrc
 ```
 
-####2.Format the hdfs file system.
+#### 2.Format the hdfs file system.
 Run following command on masternode.
 ```sh
 hadoop@master ~$ hdfs namenode -format
