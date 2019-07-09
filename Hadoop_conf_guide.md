@@ -408,17 +408,21 @@ You will see messages like:
 ![](https://i.loli.net/2019/07/09/5d24a26a307c845777.png)
 ![](https://i.loli.net/2019/07/09/5d24a27775ab692354.png)
 ![](https://i.loli.net/2019/07/09/5d24a2d6554fd74793.png)
+
+
 If no warnings and errors appear, It means all nodes are started.
 
 #### 5.Check WebUI
 ##### Access the hdfs file system address set in core-site.xml,take my settings as an example: http://localhost:9870
 
 Your will see web pages like:
+
 ![](https://i.loli.net/2019/07/09/5d24a3db762aa24335.png)
 ![](https://i.loli.net/2019/07/09/5d24a3e003c5594307.png)
 
 ##### Access http://localhost:8088 to check the status that task running on nodes.
 (This address do not need to be set.)
+
 ![](https://i.loli.net/2019/07/09/5d24a4874e1eb85230.png)
 
 #### 6.Test example task
@@ -429,6 +433,7 @@ hadoop@master ~$ hadoop jar hadoop-mapreduce-examples-3.2.0.jar pi 10 10
 ```
 
 If you see following messages,it means cluster configuring successfully.
+
 ![](https://i.loli.net/2019/07/09/5d24a5359892d66747.png)
 ![](https://i.loli.net/2019/07/09/5d24a53f37fe651941.png)
 ![](https://i.loli.net/2019/07/09/5d24a543c8e1076347.png)
