@@ -12,9 +12,10 @@ Mapreduce program will find the html pages that have the most keywords.
 # Getting Started
 
 ### Prerequisites
-You need to configure a hadoop cluster.You can find my configure guide in Hadoop_conf_guide.md [hadoop3.2.0]
+* Use [webCrawler.py](https://github.com/DizzyYunxuan/Mapreduce_Search_Program_for_bilibili/blob/master/webCrawler.py) to collect html pages
+* You need to configure a hadoop cluster.You can find my configure guide in Hadoop_conf_guide.md [hadoop3.2.0]
 
-### Usage example
+### Usage
 
 Start all node in cluster.
 
@@ -56,3 +57,6 @@ https://www.bilibili.com/video/av100	<keyword>	47
 
 ......
 ```
+## Authors
+
+* **DizzyYunxuan** - *Initial work* - [DizzyYunxuan](https://github.com/DizzyYunxuan)
