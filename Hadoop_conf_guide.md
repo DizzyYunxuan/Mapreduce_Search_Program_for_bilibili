@@ -403,6 +403,8 @@ hadoop@yyt ~$ jps
 ...
 ```
 You will see messages like:
+
+
 ![](https://i.loli.net/2019/07/09/5d24a26a307c845777.png)
 ![](https://i.loli.net/2019/07/09/5d24a27775ab692354.png)
 ![](https://i.loli.net/2019/07/09/5d24a2d6554fd74793.png)
